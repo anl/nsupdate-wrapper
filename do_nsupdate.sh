@@ -21,7 +21,7 @@ function usage {
     echo "          -n nameserver - DNS server to send updates to"
     echo "          -p privkey - Path to private key"
     echo "          -r record - Record to update"
-    echo "          -t ttl - Time to live for updated record"
+    echo "          -t ttl - Time to live for updated record; default 300s."
     echo "          -z zone - Zone to update"
     exit 1
 }
