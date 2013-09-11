@@ -66,9 +66,13 @@ if [ -z $zone ] ; then
     usage
 fi
 
-# Get external IP from DynDNS; alternative site options include
-# <http://api.externalip.net/ip/>:
-external_ip=$(curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]\{7,15\}\).*/\1/')
+if [ -x /usr/bin/ec2metadata ] ; then
+    external_ip=$(/usr/bin/ec2metadata --public-ipv4)
+else
+    # Get external IP from DynDNS; alternative site options include
+    # <http://api.externalip.net/ip/>:
+    external_ip=$(curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]\{7,15\}\).*/\1/')
+fi
 
 logger $(echo "server $nameserver
 zone $zone
