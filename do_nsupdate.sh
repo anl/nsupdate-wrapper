@@ -74,9 +74,10 @@ else
     external_ip=$(curl -s 'http://checkip.dyndns.org' | sed 's/.*Current IP Address: \([0-9\.]\{7,15\}\).*/\1/')
 fi
 
-logger $(echo "server $nameserver
+nsupdate_out=$(echo "server $nameserver
 zone $zone
 update delete $record A
 update add $record $ttl A $external_ip
 show
 send" | nsupdate -k $priv_key -v 2>&1)
+logger "$nsupdate_out"
